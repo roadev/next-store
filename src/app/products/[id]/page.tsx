@@ -1,13 +1,19 @@
 "use client";
 
-import { useProduct } from "@/hooks/useProduct";
+import Link from "next/link";
 import { notFound, useParams } from "next/navigation";
+import { useProduct } from "@/hooks/useProduct";
+import { useRelatedProducts } from "@/hooks/useRelatedProducts";
 
 export default function ProductDetailPage() {
   const params = useParams();
   const id = params?.id as string;
 
   const { data, isLoading, isError } = useProduct(id);
+  const productId = parseInt(id);
+
+  const { data: relatedProducts, isLoading: loadingRelated } =
+    useRelatedProducts(data?.category || "", productId);
 
   if (isLoading) return <p className="mt-10 text-center">Loading product...</p>;
   if (isError || !data) return notFound();
@@ -31,6 +37,31 @@ export default function ProductDetailPage() {
           </button>
         </div>
       </div>
+
+      {relatedProducts && relatedProducts.length > 0 && (
+        <div>
+          <h2 className="text-xl font-bold mb-4">Related Products</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            {relatedProducts.map((rel) => (
+              <Link
+                key={rel.id}
+                href={`/products/${rel.id}`}
+                className="border rounded-lg p-4 hover:shadow transition cursor-pointer"
+              >
+                <img
+                  src={rel.image}
+                  alt={rel.title}
+                  className="h-32 w-full object-contain mb-2"
+                />
+                <h3 className="text-sm font-semibold line-clamp-2">
+                  {rel.title}
+                </h3>
+                <p className="text-sm mt-1 font-bold">${rel.price}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </main>
   );
 }
