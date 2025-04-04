@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { notFound, useParams } from "next/navigation";
 import { useProduct } from "@/hooks/useProduct";
+import { useCartStore } from "@/store/cart";
 import { useRelatedProducts } from "@/hooks/useRelatedProducts";
 
 export default function ProductDetailPage() {
@@ -10,6 +11,7 @@ export default function ProductDetailPage() {
   const id = params?.id as string;
 
   const { data, isLoading, isError } = useProduct(id);
+  const addItem = useCartStore((state) => state.addItem);
   const productId = parseInt(id);
 
   const { data: relatedProducts, isLoading: loadingRelated } =
@@ -32,7 +34,17 @@ export default function ProductDetailPage() {
           <p className="mt-4 text-xl font-semibold">${data.price}</p>
           <p className="mt-4 text-sm text-gray-700">{data.description}</p>
 
-          <button className="mt-6 px-6 py-2 bg-primary text-white rounded hover:opacity-90 transition">
+          <button
+            onClick={() =>
+              addItem({
+                id: data.id,
+                title: data.title,
+                price: data.price,
+                image: data.image,
+              })
+            }
+            className="mt-6 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 active:scale-95 transition duration-150 ease-in-out cursor-pointer"
+          >
             Add to Cart
           </button>
         </div>
