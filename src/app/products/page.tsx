@@ -5,9 +5,13 @@ import { fetcher } from "@/lib/fetcher";
 import Link from "next/link";
 import { useQueryClient } from "@tanstack/react-query";
 import { Product } from "@/types/product";
+import { useFavoritesStore } from "@/store/favorites";
 
 export default function ProductsPage() {
   const { data, isLoading, isError } = useProducts();
+  const toggleFavorite = useFavoritesStore((s) => s.toggleFavorite);
+  const isFavorite = useFavoritesStore((s) => s.isFavorite);
+
   const queryClient = useQueryClient();
 
   if (isLoading)
@@ -46,6 +50,23 @@ export default function ProductsPage() {
               />
               <h2 className="font-semibold line-clamp-2">{product.title}</h2>
               <p className="mt-auto font-bold">${product.price}</p>
+
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  toggleFavorite({
+                    id: product.id,
+                    title: product.title,
+                    price: product.price,
+                    image: product.image,
+                  });
+                }}
+                className="mt-2 text-sm text-blue-600 hover:underline"
+              >
+                {isFavorite(product.id)
+                  ? "Remove Favorite"
+                  : "Add to Favorites"}
+              </button>
             </div>
           </Link>
         ))}
