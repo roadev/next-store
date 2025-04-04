@@ -17,6 +17,10 @@ export function Header() {
           Catalog
         </Link>
 
+        <Link href="/favorites" className="hover:underline">
+          Favorites
+        </Link>
+
         {user ? (
           <Link href="/account" className="hover:underline">
             My Account

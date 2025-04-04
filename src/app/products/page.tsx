@@ -61,11 +61,14 @@ export default function ProductsPage() {
                     image: product.image,
                   });
                 }}
-                className="mt-2 text-sm text-blue-600 hover:underline"
+                className="mt-2 text-sm text-blue-600 hover:underline cursor-pointer flex items-center gap-1"
               >
-                {isFavorite(product.id)
-                  ? "Remove Favorite"
-                  : "Add to Favorites"}
+                <span>{isFavorite(product.id) ? "♥" : "♡"}</span>
+                <span>
+                  {isFavorite(product.id)
+                    ? "Remove Favorite"
+                    : "Add to Favorites"}
+                </span>
               </button>
             </div>
           </Link>
