@@ -5,6 +5,7 @@ import { notFound, useParams } from "next/navigation";
 import { useProduct } from "@/hooks/useProduct";
 import { useCartStore } from "@/store/cart";
 import { useRelatedProducts } from "@/hooks/useRelatedProducts";
+import { useFavoritesStore } from "@/store/favorites";
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -16,6 +17,9 @@ export default function ProductDetailPage() {
 
   const { data: relatedProducts, isLoading: loadingRelated } =
     useRelatedProducts(data?.category || "", productId);
+
+  const toggleFavorite = useFavoritesStore((s) => s.toggleFavorite);
+  const isFavorite = useFavoritesStore((s) => s.isFavorite);
 
   if (isLoading) return <p className="mt-10 text-center">Loading product...</p>;
   if (isError || !data) return notFound();
@@ -46,6 +50,22 @@ export default function ProductDetailPage() {
             className="mt-6 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 active:scale-95 transition duration-150 ease-in-out cursor-pointer"
           >
             Add to Cart
+          </button>
+          <button
+            onClick={() =>
+              toggleFavorite({
+                id: data.id,
+                title: data.title,
+                price: data.price,
+                image: data.image,
+              })
+            }
+            className="mt-3 text-sm text-blue-600 hover:underline cursor-pointer flex items-center gap-1"
+          >
+            <span>{isFavorite(data.id) ? "♥" : "♡"}</span>
+            <span>
+              {isFavorite(data.id) ? "Remove Favorite" : "Add to Favorites"}
+            </span>
           </button>
         </div>
       </div>
