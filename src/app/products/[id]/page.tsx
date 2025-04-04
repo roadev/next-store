@@ -6,6 +6,7 @@ import { useProduct } from "@/hooks/useProduct";
 import { useCartStore } from "@/store/cart";
 import { useRelatedProducts } from "@/hooks/useRelatedProducts";
 import { useFavoritesStore } from "@/store/favorites";
+import { useState } from "react";
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -13,6 +14,8 @@ export default function ProductDetailPage() {
 
   const { data, isLoading, isError } = useProduct(id);
   const addItem = useCartStore((state) => state.addItem);
+  const [added, setAdded] = useState(false);
+  const [_, setRefresh] = useState(false);
   const productId = parseInt(id);
 
   const { data: relatedProducts, isLoading: loadingRelated } =
@@ -39,30 +42,42 @@ export default function ProductDetailPage() {
           <p className="mt-4 text-sm text-gray-700">{data.description}</p>
 
           <button
-            onClick={() =>
+            onClick={() => {
               addItem({
                 id: data.id,
                 title: data.title,
                 price: data.price,
                 image: data.image,
-              })
-            }
+              });
+              setAdded(true);
+              setTimeout(() => setAdded(false), 1500);
+            }}
             className="mt-6 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 active:scale-95 transition duration-150 ease-in-out cursor-pointer"
           >
-            Add to Cart
+            {added ? "Added!" : "Add to Cart"}
           </button>
+
           <button
-            onClick={() =>
+            onClick={() => {
               toggleFavorite({
                 id: data.id,
                 title: data.title,
                 price: data.price,
                 image: data.image,
-              })
-            }
+              });
+              setRefresh((r) => !r);
+            }}
             className="mt-3 text-sm text-blue-600 hover:underline cursor-pointer flex items-center gap-1"
           >
-            <span>{isFavorite(data.id) ? "♥" : "♡"}</span>
+            <span
+              className={`transition ${
+                isFavorite(data.id)
+                  ? "text-blue-600 animate-pulse"
+                  : "text-gray-400"
+              }`}
+            >
+              {isFavorite(data.id) ? "♥" : "♡"}
+            </span>
             <span>
               {isFavorite(data.id) ? "Remove Favorite" : "Add to Favorites"}
             </span>

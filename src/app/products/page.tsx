@@ -6,11 +6,13 @@ import Link from "next/link";
 import { useQueryClient } from "@tanstack/react-query";
 import { Product } from "@/types/product";
 import { useFavoritesStore } from "@/store/favorites";
+import { useState } from "react";
 
 export default function ProductsPage() {
   const { data, isLoading, isError } = useProducts();
   const toggleFavorite = useFavoritesStore((s) => s.toggleFavorite);
   const isFavorite = useFavoritesStore((s) => s.isFavorite);
+  const [_, setRefresh] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -60,10 +62,19 @@ export default function ProductsPage() {
                     price: product.price,
                     image: product.image,
                   });
+                  setRefresh((r) => !r);
                 }}
                 className="mt-2 text-sm text-blue-600 hover:underline cursor-pointer flex items-center gap-1"
               >
-                <span>{isFavorite(product.id) ? "♥" : "♡"}</span>
+                <span
+                  className={`transition ${
+                    isFavorite(product.id)
+                      ? "text-blue-600 animate-pulse"
+                      : "text-gray-400"
+                  }`}
+                >
+                  {isFavorite(product.id) ? "♥" : "♡"}
+                </span>
                 <span>
                   {isFavorite(product.id)
                     ? "Remove Favorite"
