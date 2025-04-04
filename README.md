@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js E-commerce Store
 
-## Getting Started
+This is a basic e-commerce platform built with Next.js (App Router), Tailwind CSS, and React Query
 
-First, run the development server:
+## Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node v22 LTS
+- Next.js 14 (App Router)
+- React 18
+- TypeScript
+- Tailwind CSS
+- React Query (TanStack Query)
+- Zustand (for cart state)
+- ESLint (with default Next.js config)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features Implemented
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Project Setup
 
-## Learn More
+- Initialized with `create-next-app` using App Router
+- Tailwind CSS configured with a basic custom theme (primary, secondary, accent)
+- React Query integrated globally with a custom `fetcher`
+- ESLint and project structure organized under `src/`
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Product Catalog (`/products`)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Products are fetched from Fake Store API using React Query (`useQuery`)
+- Grid layout with responsive design for mobile, tablet, desktop
+- Hover-based prefetching of product details using `queryClient.prefetchQuery`
+- Empty, error, and loading states handled
+- Strict typing applied for API data
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Product Detail Page (`/products/[id]`)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Dynamic page for each product with full details (image, title, description, price, category)
+- Uses `useQuery` with enabled flag for controlled loading
+- Related products section implemented using a parallel query based on category
+- Prefetching works via catalog hover interaction
+- "Add to Cart" button with visual feedback and click animation
+
+---
+
+### Shopping Cart (Persistent Sidebar)
+
+- Zustand used for global state with `persist` middleware for localStorage support
+- Cart drawer can be toggled globally via floating button
+- Functionality includes: add item, remove item, update quantity, clear cart
+- Subtotal, tax (15%), and total are displayed in the summary
+- Responsive and accessible base UI with basic keyboard escape handling
+
+---
+
+## How to Run Locally
+
+1. Clone the repo:
+   git clone git@github.com:roadev/next-store.git
+
+2. Install dependencies:
+   npm install
+
+3. Start the dev server:
+   npm run dev
+
+4. Open the app:
+   http://localhost:3000/products
+
+---
+
+## Technical Notes
+
+- Zustand was chosen over Redux for simplicity, minimal setup, and good performance with persisted state
+- React Query handles all product fetching, caching, prefetching, and state transitions
+- Layout and structure follow a domain-agnostic, minimal, and scalable setup

@@ -13,9 +13,12 @@ export function CartDrawer() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const subtotal = items
-    .reduce((acc, item) => acc + item.price * item.quantity, 0)
-    .toFixed(2);
+  const rawSubtotal = items.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0,
+  );
+  const tax = +(rawSubtotal * 0.15).toFixed(2);
+  const total = +(rawSubtotal + tax).toFixed(2);
 
   return (
     <>
@@ -75,7 +78,11 @@ export function CartDrawer() {
               </ul>
 
               <div className="mt-6 border-t pt-4">
-                <p className="text-sm font-medium">Subtotal: ${subtotal}</p>
+                <div className="text-sm space-y-1">
+                  <p>Subtotal: ${rawSubtotal.toFixed(2)}</p>
+                  <p>Tax (15%): ${tax.toFixed(2)}</p>
+                  <p className="font-semibold">Total: ${total.toFixed(2)}</p>
+                </div>
                 <button
                   onClick={clearCart}
                   className="mt-3 w-full text-sm text-red-600 hover:underline"
