@@ -130,3 +130,4 @@ This is a basic e-commerce platform built with Next.js (App Router), Tailwind CS
 - Dark mode toggle may not sync correctly on initial load in all environments
 - No loading skeletons were implemented (only text-based loading states)
 - No backend, so orders are simulated
+- As accessibility improvement, i18n support could be implemented, this way, more language can be supported, like Spanish.
