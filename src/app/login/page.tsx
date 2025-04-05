@@ -10,7 +10,10 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen px-4">
+    <main
+      role="main"
+      className="flex flex-col items-center justify-center min-h-screen px-4"
+    >
       <h1 className="text-2xl font-bold mb-4">Login</h1>
       <input
         type="text"
@@ -25,7 +28,7 @@ export default function LoginPage() {
           router.push("/account");
         }}
         disabled={!username.trim()}
-        className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+        className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         Sign in
       </button>

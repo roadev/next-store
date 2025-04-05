@@ -17,7 +17,7 @@ export default function AccountPage() {
   if (!user) return null;
 
   return (
-    <main className="max-w-2xl mx-auto px-4 py-10">
+    <main role="main" className="max-w-2xl mx-auto px-4 py-10">
       <h1 className="text-2xl font-bold mb-4">Welcome, {user}</h1>
       <p className="text-sm text-gray-600">This is your account dashboard.</p>
       <button

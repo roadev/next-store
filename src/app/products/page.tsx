@@ -26,7 +26,7 @@ export default function ProductsPage() {
     return <p className="text-center mt-10">No products found.</p>;
 
   return (
-    <main className="px-4 py-8">
+    <main role="main" className="px-4 py-8">
       <div className="max-w-screen-lg mx-auto">
         <h1 className="text-3xl font-bold mb-6">Product Catalog</h1>
       </div>
@@ -70,6 +70,7 @@ export default function ProductsPage() {
                 className="mt-2 text-sm text-blue-600 hover:underline cursor-pointer flex items-center gap-1"
               >
                 <span
+                  aria-hidden="true"
                   className={`transition ${
                     isFavorite(product.id)
                       ? "text-blue-600 animate-pulse"

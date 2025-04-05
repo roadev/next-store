@@ -10,12 +10,18 @@ export function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="bg-white border-b px-6 py-4 shadow-sm flex items-center justify-between sticky top-0 z-40">
+    <header
+      role="banner"
+      className="bg-white border-b px-6 py-4 shadow-sm flex items-center justify-between sticky top-0 z-40"
+    >
       <Link href="/products" className="text-lg font-bold tracking-tight">
         Store
       </Link>
 
-      <nav className="flex items-center gap-6 text-sm font-medium">
+      <nav
+        role="navigation"
+        className="flex items-center gap-6 text-sm font-medium"
+      >
         <Link
           href="/products"
           className={`hover:underline ${pathname === "/products" ? "text-blue-600 font-semibold" : ""}`}
@@ -45,7 +51,7 @@ export function Header() {
             Login
           </Link>
         )}
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
       </nav>
     </header>
   );

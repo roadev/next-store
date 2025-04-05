@@ -52,7 +52,7 @@ export default function ProductDetailPage() {
               setAdded(true);
               setTimeout(() => setAdded(false), 1500);
             }}
-            className="mt-6 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 active:scale-95 transition duration-150 ease-in-out cursor-pointer"
+            className="mt-6 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 active:scale-95 transition duration-150 ease-in-out cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             {added ? "Added!" : "Add to Cart"}
           </button>

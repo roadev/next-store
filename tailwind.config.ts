@@ -11,5 +11,10 @@ module.exports = {
       },
     },
   },
+  extend: {
+    ringColor: {
+      DEFAULT: "#3b82f6", // azul
+    },
+  },
   plugins: [],
 };
