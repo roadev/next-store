@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useAuthStore } from "@/store/auth";
 import { usePathname } from "next/navigation";
-import { ThemeToggle } from "./ThemeToggle";
 
 export function Header() {
   const user = useAuthStore((s) => s.user);
