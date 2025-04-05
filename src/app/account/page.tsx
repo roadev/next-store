@@ -3,6 +3,7 @@
 import { useAuthStore } from "@/store/auth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { orders } from "@/constants/data/orders";
 
 export default function AccountPage() {
   const user = useAuthStore((s) => s.user);
@@ -28,6 +29,27 @@ export default function AccountPage() {
       >
         Logout
       </button>
+
+      <div className="mt-8">
+        <h2 className="text-lg font-semibold mb-3">Order History</h2>
+        <ul className="space-y-4 text-sm">
+          {orders.map((order) => (
+            <li
+              key={order.id}
+              className="p-4 border rounded-lg bg-white dark:bg-zinc-800 shadow-sm"
+            >
+              <div className="flex justify-between">
+                <span className="font-medium">{order.id}</span>
+                <span>{order.date}</span>
+              </div>
+              <div className="mt-2 text-gray-600 dark:text-gray-300">
+                {order.items} item{order.items > 1 ? "s" : ""} – Total: $
+                {order.total.toFixed(2)}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </main>
   );
 }

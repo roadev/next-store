@@ -6,11 +6,13 @@ import Link from "next/link";
 import { useQueryClient } from "@tanstack/react-query";
 import { Product } from "@/types/product";
 import { useFavoritesStore } from "@/store/favorites";
+import { useState } from "react";
 
 export default function ProductsPage() {
   const { data, isLoading, isError } = useProducts();
   const toggleFavorite = useFavoritesStore((s) => s.toggleFavorite);
   const isFavorite = useFavoritesStore((s) => s.isFavorite);
+  const [_, setRefresh] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -24,9 +26,12 @@ export default function ProductsPage() {
     return <p className="text-center mt-10">No products found.</p>;
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Product Catalog</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <main className="px-4 py-8">
+      <div className="max-w-screen-lg mx-auto">
+        <h1 className="text-3xl font-bold mb-6">Product Catalog</h1>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-screen-xl mx-auto">
         {data.map((product: Product) => (
           <Link
             key={product.id}
@@ -60,10 +65,19 @@ export default function ProductsPage() {
                     price: product.price,
                     image: product.image,
                   });
+                  setRefresh((r) => !r);
                 }}
                 className="mt-2 text-sm text-blue-600 hover:underline cursor-pointer flex items-center gap-1"
               >
-                <span>{isFavorite(product.id) ? "♥" : "♡"}</span>
+                <span
+                  className={`transition ${
+                    isFavorite(product.id)
+                      ? "text-blue-600 animate-pulse"
+                      : "text-gray-400"
+                  }`}
+                >
+                  {isFavorite(product.id) ? "♥" : "♡"}
+                </span>
                 <span>
                   {isFavorite(product.id)
                     ? "Remove Favorite"

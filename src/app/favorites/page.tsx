@@ -7,7 +7,7 @@ export default function FavoritesPage() {
   const favorites = useFavoritesStore((s) => s.favorites);
 
   return (
-    <main className="container mx-auto px-4 py-8">
+    <main className="max-w-screen-lg mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-6">Your Favorites</h1>
 
       {favorites.length === 0 ? (
