@@ -11,7 +11,7 @@ export function Header() {
   return (
     <header
       role="banner"
-      className="bg-white border-b px-6 py-4 shadow-sm flex items-center justify-between sticky top-0 z-40"
+      className="bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-800 px-6 py-4 shadow-sm flex items-center justify-between sticky top-0 z-40 transition-colors"
     >
       <Link href="/products" className="text-lg font-bold tracking-tight">
         Store
