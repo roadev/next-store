@@ -24,13 +24,13 @@ export function CartDrawer() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-4 right-4 z-50 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-700 transition"
+        className="fixed bottom-4 right-4 z-50 flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-700 transition"
       >
-        Cart ({items.length})
+        🛒 Cart ({items.length})
       </button>
 
       {isOpen && (
-        <div className="fixed top-0 right-0 w-80 h-full bg-white shadow-lg z-50 p-4 overflow-y-auto border-l">
+        <div className="fixed top-0 right-0 w-80 h-full bg-white dark:bg-zinc-900 text-black dark:text-white shadow-lg z-50 p-6 overflow-y-auto border-l border-gray-200 dark:border-zinc-700 transition-transform">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold">Your Cart</h2>
             <button
@@ -47,7 +47,10 @@ export function CartDrawer() {
             <>
               <ul className="space-y-4">
                 {items.map((item) => (
-                  <li key={item.id} className="flex items-center gap-3">
+                  <li
+                    key={item.id}
+                    className="flex items-center gap-3 border-b pb-3"
+                  >
                     <img
                       src={item.image}
                       alt={item.title}
