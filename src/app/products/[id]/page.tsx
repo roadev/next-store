@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { notFound, useParams } from "next/navigation";
 import { useProduct } from "@/hooks/useProduct";
 import { useCartStore } from "@/store/cart";
@@ -15,11 +16,13 @@ export default function ProductDetailPage() {
   const { data, isLoading, isError } = useProduct(id);
   const addItem = useCartStore((state) => state.addItem);
   const [added, setAdded] = useState(false);
-  const [_, setRefresh] = useState(false);
+  const [, setRefresh] = useState(false);
   const productId = parseInt(id);
 
-  const { data: relatedProducts, isLoading: loadingRelated } =
-    useRelatedProducts(data?.category || "", productId);
+  const { data: relatedProducts } = useRelatedProducts(
+    data?.category || "",
+    productId,
+  );
 
   const toggleFavorite = useFavoritesStore((s) => s.toggleFavorite);
   const isFavorite = useFavoritesStore((s) => s.isFavorite);
@@ -30,9 +33,11 @@ export default function ProductDetailPage() {
   return (
     <main className="max-w-screen-lg mx-auto px-4 py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <img
+        <Image
           src={data.image}
           alt={data.title}
+          width={300}
+          height={300}
           className="h-80 object-contain"
         />
         <div>

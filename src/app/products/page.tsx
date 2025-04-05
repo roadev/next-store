@@ -3,6 +3,7 @@
 import { useProducts } from "@/hooks/useProducts";
 import { fetcher } from "@/lib/fetcher";
 import Link from "next/link";
+import Image from "next/image";
 import { useQueryClient } from "@tanstack/react-query";
 import { Product } from "@/types/product";
 import { useFavoritesStore } from "@/store/favorites";
@@ -12,7 +13,7 @@ export default function ProductsPage() {
   const { data, isLoading, isError } = useProducts();
   const toggleFavorite = useFavoritesStore((s) => s.toggleFavorite);
   const isFavorite = useFavoritesStore((s) => s.isFavorite);
-  const [_, setRefresh] = useState(false);
+  const [, setRefresh] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -48,9 +49,11 @@ export default function ProductsPage() {
             className="cursor-pointer"
           >
             <div className="border rounded-lg p-4 hover:shadow-md transition h-full flex flex-col">
-              <img
+              <Image
                 src={product.image}
                 alt={product.title}
+                width={300}
+                height={300}
                 className="h-40 w-full object-contain mb-4"
               />
               <h2 className="font-semibold line-clamp-2">{product.title}</h2>
